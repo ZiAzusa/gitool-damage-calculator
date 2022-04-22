@@ -235,7 +235,6 @@ $(function() {
         } else {
             levelPart = 1;
         }
-        //最终伤害计算
         alwaysScore = ((atk * addHurtPart * reduceResPart * reduceDefPart * reactionPart * skillPart * specialPart + addition) * levelPart).toFixed(3);
         critScore = (alwaysScore * critPart).toFixed(3);
         if (CRPart == null) {
@@ -251,25 +250,11 @@ $(function() {
         }
     });
     $("button[name=export]").on('click', function() {
-        exportData = {
-            "atk": atk,
-            "crit-p": critp * 100,
-            "crit-d": critd * 100,
-            "skill": skill * 100,
-            "mastery": mastery,
-            "addHurt": addHurt * 100,
-            "reduce-res": reduceRes * 100,
-            "reduce-def": reduceDef * 100,
-            "addition": addition,
-            "multiplication": multiplication * 100,
-            "special": special * 100,
-            "chr-level": chrLevel,
-            "chr-elemnet": chrElemnet,
-            "chr-reaction": chrReaction,
-            "mos-level": mosLevel,
-            "mos-name": mosName,
-            "mos-elemnet": mosElement
-        };
+        label = ["atk", "crit-p", "crit-d", "skill", "mastery", "addHurt", "reduce-res", "reduce-def", "addition", "multiplication", "special", "chr-level", "chr-elemnet", "chr-reaction", "mos-level", "mos-name", "mos-elemnet"];
+        exportData = {};
+        for (var labelkey in label) {
+            exportData[label[labelkey]] = $('#' + label[labelkey]).val();
+        }
         exportDataStr = JSON.stringify(exportData);
             blob = new Blob([exportDataStr]);
         $('#export-link').attr('href', URL.createObjectURL(blob));
