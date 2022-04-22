@@ -1,0 +1,122 @@
+<html>
+<head>
+    <meta http-equiv="content-Type" content="text/html; charset=utf-8">
+    <meta name='viewport' content='width=device-width,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'>
+    <title>原神伤害计算器</title>
+    <link href='icon.ico' rel='icon' type='image/x-icon' />
+    <link href='index.css' rel='stylesheet' type='text/css' />
+</head>
+<body onload="start();">
+    <div id='overlay' class='overlay'>
+        <div class='text-bg' style="width:300px">
+            <h3>原神伤害计算器</h3>
+            <p style="font-size:15px">
+                攻击力：<br>
+                <input id="atk" type='text' placeholder='请填写面板上白值绿值的和' value='1000'><br>
+                暴击率：<br>
+                <input id="crit-p" type='text' value='5'>%<br>
+                暴击伤害：<br>
+                <input id="crit-d" type='text' value='50'>%<br>
+                技能倍率：<br>
+                <input id="skill" type='text' value='100'>%<br>
+                元素精通：<br>
+                <input id="mastery" type='text' value='0'>%<br>
+                物理或元素增伤：<br>
+                <input id="addHurt" type='text' value='0'>%<br>
+                减抗Buff：<br>
+                <input id="reduce-res" type='text' placeholder='多个减抗Buff请将数字相加'>%<br>
+                <font style="font-size:12px">例：风套4减抗40%，钟离e减抗20%，那么填写60即可</font><br>
+                减防Buff：<br>
+                <input id="reduce-def" type='text' placeholder='多个减防Buff请将数字相加'>%<br>
+                <font style="font-size:12px">例：可莉2命减防20%，那么填写20即可</font><br>
+                加算增伤：<br>
+                <input id="addition" type='text' placeholder='多个加算增伤请将数字相加'><br>
+                <font style="font-size:12px">例：钟离Q基本伤害=攻击力×技能倍率+33%生命值，那么填写33%生命值的计算结果即可</font><br>
+                乘算增伤：<br>
+                <input id="multiplication" type='text' placeholder='多个乘算增伤请将数字相加'>%<br>
+                <font style="font-size:12px">例：七七对受到冰元素影响的敌人的普通攻击与重击造成的伤害提升15%，那么填写15即可</font><br>
+                特殊乘区：<br>
+                <input id="special" type='text' placeholder="查看示例后再填写本项!">%<br>
+                <font style="font-size:12px">目前已知的拥有特殊乘区的仅有行秋4命效果：在Q持续期间E伤害提升50%，如果你要计算4命行秋，请填写50</font><br>
+                其它有效属性：
+                <table bordercolor='black' cellspacing='0' cellpadding='5' id="Call-table" style="display:block">
+                    <tr>
+                        <td style="font-size:15px;vertical-align:top;width:50%">
+                            <p style='text-align:center'>角色相关</p>
+                            角色等级：<br>
+                            <input id="chr-level" type='number' min='0' max='90' style='width:80%' value='0' oninput="if(value>90)value=90;if(value<0)value=0"><br>
+                            攻击属性：<br>
+                            <select id="chr-elemnet" onchange="reaction();">
+                                <option id="物理" value="物理">物理</option>
+                                <option id="风" value="风">风</option>
+                                <option id="岩" value="岩">岩</option>
+                                <option id="火" value="火">火</option>
+                                <option id="水" value="水">水</option>
+                                <option id="雷" value="雷">雷</option>
+                                <option id="冰" value="冰">冰</option>
+                                <option id="草" value="草">草</option>
+                            </select>
+                            元素反应：<br>
+                            <select id="chr-reaction">
+                                <option id="none" value="none">不反应</option>
+                                <option id="shattered" value="shattered">碎冰</option>
+                            </select>
+                        </td>
+                        <td style="font-size:15px;vertical-align:top;width:50%">
+                            <p style='text-align:center'>怪物相关</p>
+                            怪物等级：<br>
+                            <input id="mos-level" type='number' min='0' max='100' style='width:80%' value='0' oninput="if(value>90)value=90;if(value<0)value=0"><br>
+                            怪物类型：<br>
+                            <select id="mos-name" onchange="mosEle();">
+                            </select>
+                            怪物属性：<br>
+                            <select id="mos-elemnet">
+                                <option id="none" value="none">无属性</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <div class='notice' style='text-align:center'>
+                    <span style="display:block">数据操作</span>
+                    <button id="export" name="export" style='width:49%;display:inline'>导出</button>
+                    <button id="import" name="import" style='width:49%;display:inline'>导入</button>
+                    <span style="display:block;font-size:12px">您可以通过导入和导出数据快速使用和保存属性</span>
+                </div>
+                <button id="score" name="score" style="width:100%;display:block">计算伤害</button>
+            </p>
+            <div class='notice'>
+                <table bordercolor='black' cellspacing='0' cellpadding='5'>
+                    <tbody style="text-align:center">
+                        <tr>
+                            <td><b>平均伤害</b></td>
+                            <td><span id="average-score">0.000</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>期望伤害</b></td>
+                            <td><span id="always-score">0.000</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>暴击伤害</b></td>
+                            <td><span id="crit-score">0.000</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table bordercolor='black' cellspacing='0' cellpadding='5'>
+                    <tbody style="text-align:center" id="crd"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style='display:none;top:0px;bottom:0px;left:0px;right:0px;margin:auto'>
+        <a id='export-link'><span id='export-text'></span></a>
+        <input id='import-file' type="file" name="upload" onchange="uploadData(this);" accept='.json'>
+    </div>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type='text/javascript' src='js/index.js?finally-ver'></script>
+    <!--<footer id="footer">
+        <ul class="copyright">
+            <p>2022 &copy; Powered by 0803QwQ</p>
+        </ul>
+    </footer>-->
+</body>
+</html>

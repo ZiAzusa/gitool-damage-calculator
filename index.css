@@ -1,0 +1,106 @@
+.overlay {
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.overlay:before {
+    background:url(https://iw233.cn/api.php?sort=random) no-repeat;
+    background-size:cover;
+    background-position:center 0;
+    width:100%;
+    height:100%;
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:-1;
+    -webkit-filter:blur(0px);
+    filter:blur(0px);
+    margin:0;
+    padding:0;
+    position:fixed;
+}
+.text-bg {
+    background-color:rgba(255,255,255,0.6);
+    padding:24px;
+}
+button {
+    width:144px;
+    margin:20px auto;
+    height:40px;
+    border-width:0px;
+    border-radius:3px;
+    background:#1E83FF;
+    cursor:pointer;
+    outline:none;
+    font-family:Microsoft YaHei;
+    color:white;
+    font-size:15px;
+    -webkit-appearance:none;
+}
+button:hover {
+    background:#3C8DFF;
+    -webkit-appearance:none;
+}
+::-moz-placeholder {
+    color:#6a6f77;
+}
+::-moz-placeholder {
+    color:#6a6f77;
+}
+button::-webkit-input-placeholder {
+    color:#6a6f77;
+}
+.notice {
+    margin:10%auto0;
+    background-color:rgba(255,255,255,0.8);
+    padding:2%5%
+}
+select {
+    -web-kit-appearance:none;
+    -moz-appearance:none;
+    border-radius:4px;
+    border:1px solid #c8cccf;
+    color:#6a6f77;
+    width:90%;
+    height:27px;
+    outline:0;
+    text-decoration:none;
+    display:block;
+}
+select:focus {
+    border:1px solid #ff7496;
+}
+input {
+    -web-kit-appearance:none;
+    -moz-appearance:none;
+    border:none;
+    border-bottom:2px solid #c8cccf;
+    background-color:rgba(255,255,255,0.8);
+    color:#6a6f77;
+    width:180px;
+    height:27px;
+    outline:0;
+    text-decoration:none;
+    display:inline;
+}
+input:focus {
+    border-bottom:2px solid #ff7496;
+}
+p {
+    line-height:2
+}
+table {
+    margin:auto;
+    border:none;
+    border-spacing:0;
+    width:100%;
+    border-collapse:collapse;
+}
+td {
+    z-index:300;
+    width:50%;
+    max-width:145px;
+    vertical-align:middle;
+}
