@@ -64,7 +64,7 @@ select {
     border:1px solid #c8cccf;
     color:#6a6f77;
     width:90%;
-    height:27px;
+    height:36px;
     outline:0;
     text-decoration:none;
     display:block;
@@ -80,7 +80,7 @@ input {
     background-color:rgba(255,255,255,0.8);
     color:#6a6f77;
     width:180px;
-    height:27px;
+    height:36px;
     outline:0;
     text-decoration:none;
     display:inline;
