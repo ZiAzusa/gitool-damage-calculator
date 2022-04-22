@@ -42,9 +42,9 @@
                 <table bordercolor='black' cellspacing='0' cellpadding='5' id="Call-table" style="display:block">
                     <tr>
                         <td style="font-size:15px;vertical-align:top;width:50%">
-                            <p style='text-align:center'>角色相关</p>
+                            <p style='text-align:left'>角色相关</p>
                             角色等级：<br>
-                            <input id="chr-level" type='number' min='0' max='90' style='width:80%' value='0' oninput="if(value>90)value=90;if(value<0)value=0"><br>
+                            <input id="chr-level" type='number' min='0' max='90' style='width:90%' value='0' oninput="if(value>90)value=90;if(value<0)value=0"><br>
                             攻击属性：<br>
                             <select id="chr-elemnet" onchange="reaction();">
                                 <option id="物理" value="物理">物理</option>
@@ -63,9 +63,9 @@
                             </select>
                         </td>
                         <td style="font-size:15px;vertical-align:top;width:50%">
-                            <p style='text-align:center'>怪物相关</p>
+                            <p style='text-align:left'>怪物相关</p>
                             怪物等级：<br>
-                            <input id="mos-level" type='number' min='0' max='100' style='width:80%' value='0' oninput="if(value>100)value=100;if(value<0)value=0"><br>
+                            <input id="mos-level" type='number' min='0' max='100' style='width:90%' value='0' oninput="if(value>100)value=100;if(value<0)value=0"><br>
                             怪物类型：<br>
                             <select id="mos-name" onchange="mosEle();">
                             </select>
