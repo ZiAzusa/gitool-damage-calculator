@@ -1,5 +1,5 @@
 # GITool原神角色伤害计算器
-这是一个完全在前端运行，支持导入导出数据的原神角色伤害计算器，使用jQuery开发❤️
+这是一个完全在前端运行，支持导入导出数据的原神角色伤害计算器，使用jQuery开发❤️<hr>
 **项目示例效果 => [GitHub Pages](https://0803qwq.github.io/gitool-damage-calculator/)**<hr>
 ## 基本使用方法
 将本仓库clone到您的网站目录下即可开始使用<br>
