@@ -17,8 +17,11 @@
                 <input id="crit-p" type='text' value='5'>%<br>
                 暴击伤害：<br>
                 <input id="crit-d" type='text' value='50'>%<br>
-                技能倍率：<br>
-                <input id="skill" type='text' value='100'>%<br>
+                技能倍率 * 次数：
+                <button id="skill-button" name="add-skill" style="background-color:#66FF66">+</button> 
+                <button id="skill-button" name="minus-skill" style="background-color:#FF6666">-</button><br>
+                <input id="skill" type='text' placeholder='填天赋页面上的倍率' value='100'>% * <input id="skill-num" type='number' placeholder='次数' value='1' style='width:50px'><br>
+                <span id="next-skill"></span>
                 元素精通：<br>
                 <input id="mastery" type='text' value='0'><br>
                 物理或元素增伤：<br>
@@ -111,7 +114,7 @@
         <a id='export-link'><span id='export-text'></span></a>
         <input id='import-file' type="file" name="upload" onchange="uploadData(this);" accept='.json'>
     </div>
-    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="jquery-3.4.1.min.js"></script>
     <script type='text/javascript' src='js/index.js?finally-ver'></script>
     <!--<footer id="footer">
         <ul class="copyright">
