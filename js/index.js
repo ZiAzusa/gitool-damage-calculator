@@ -11,14 +11,15 @@ function uploadData(obj) {
     $().importData(obj);
 }
 $(function() {
-        elementID = {"风": 0, "岩": 1, "火": 2, "水": 3, "雷": 4, "冰": 5, "草": 6};
-        powerdata = $.ajax({
+    var skillCount = 0;
+    elementID = {"风": 0, "岩": 1, "火": 2, "水": 3, "雷": 4, "冰": 5, "草": 6};
+    powerdata = $.ajax({
         type: "get",
         url: "data.json",
         async: false,
         dataType: 'json'
     });
-        power = powerdata.responseJSON;
+    power = powerdata.responseJSON;
     $.fn.setMos = function() {
         moslist = power['mos'];
         for (var mosName in moslist) {
@@ -89,9 +90,14 @@ $(function() {
         reader.readAsText(files[0], "UTF-8");
         reader.onload = function(evt) {
             json = JSON.parse(evt.target.result);
-            for (var key in json) {
-                console.log(json[key]);
-                $('#' + key).val(json[key]);
+            for (var key in json["basic"]) {
+                $('#' + key).val(json["basic"][key]);
+            }
+            if (json["skill"]["count"] != 0) {
+                skillCount = json["skill"]["count"];
+                for (var i = 1; i <= json["skill"]["count"]; i ++) {
+                    $('#next-skill').append("<span id='next-skill-" + i + "'><input id='skill-" + i + "' type='text' placeholder='填天赋页面上的倍率' value='" + json["skill"]["skillArr"][i]["value"] + "'>% * <input id='skill-num-" + i + "' type='number' placeholder='次数' style='width:50px' value='" + json["skill"]["skillArr"][i]["num"] + "'><br></span>");
+                }
             }
             $('#import').html('成功');
             return;
@@ -131,6 +137,7 @@ $(function() {
         critp = $('#crit-p').val() / 100;
         critd = $('#crit-d').val() / 100;
         skill = $('#skill').val() / 100;
+        skillNum = $('#skill-num').val();
         mastery = $('#mastery').val();
         addHurt = $('#addHurt').val() / 100;
         reduceRes = $('#reduce-res').val() / 100;
@@ -220,7 +227,14 @@ $(function() {
             reactionPart = 1;
             CRPart = (power['crc'][chrLevel] * reduceResPart * times* (16 * mastery / (mastery + 2000) + 1)).toFixed(3);
         }
-        skillPart = 1 + skill;
+        skillPart = (1 + skill) * skillNum;
+        if (skillCount != 0) {
+            for (var i = 1; i <= skillCount; i ++) {
+                skillValue = $('#skill-' + i).val() / 100;
+                skillNumValue = $('#skill-num-' + i).val();
+                skillPart = skillPart + ((1 + skillValue) * skillNumValue);
+            }
+        }
         specialPart = 1 + special;
         critPart = 1 + critd;
         if (critp >= 1) {
@@ -241,7 +255,7 @@ $(function() {
             $('#average-score').html((critScore * critp + alwaysScore * (1 - critp)).toFixed(3));
             $('#always-score').html(alwaysScore);
             $('#crit-score').html(critScore);
-            $("#crd").html(null);
+            $("#crd").html('<span></span>');
         } else {
             $('#average-score').html((critScore * critp + alwaysScore * (1 - critp)).toFixed(3));
             $('#always-score').html(alwaysScore);
@@ -250,10 +264,21 @@ $(function() {
         }
     });
     $("button[name=export]").on('click', function() {
-        label = ["atk", "crit-p", "crit-d", "skill", "mastery", "addHurt", "reduce-res", "reduce-def", "addition", "multiplication", "special", "chr-level", "chr-elemnet", "chr-reaction", "mos-level", "mos-name", "mos-elemnet"];
+        label = ["atk", "crit-p", "crit-d", "skill", "skill-num", "mastery", "addHurt", "reduce-res", "reduce-def", "addition", "multiplication", "special", "chr-level", "chr-elemnet", "chr-reaction", "mos-level", "mos-name", "mos-elemnet"];
         exportData = {};
+        exportData["basic"] = {};
+        exportData["skill"] = {};
         for (var labelkey in label) {
-            exportData[label[labelkey]] = $('#' + label[labelkey]).val();
+            exportData["basic"][label[labelkey]] = $('#' + label[labelkey]).val();
+        }
+        exportData["skill"]["count"] = skillCount;
+        exportData["skill"]["skillArr"] = {};
+        if (skillCount != 0) {
+            for (var i = 1; i <= skillCount; i ++) {
+                exportData["skill"]["skillArr"][i] = {};
+                exportData["skill"]["skillArr"][i]["value"] = $('#skill-' + i).val();
+                exportData["skill"]["skillArr"][i]["num"] = $('#skill-num-' + i).val();
+            }
         }
         exportDataStr = JSON.stringify(exportData);
             blob = new Blob([exportDataStr]);
@@ -264,4 +289,15 @@ $(function() {
     $("button[name=import]").on('click', function() {
         $('#import-file').trigger("click");
     });
+    $("button[name=add-skill]").on('click', function() {
+        skillCount = skillCount + 1;
+        $('#next-skill').append("<span id='next-skill-" + skillCount + "'><input id='skill-" + skillCount + "' type='text' placeholder='填天赋页面上的倍率'>% * <input id='skill-num-" + skillCount + "' type='number' placeholder='次数' style='width:50px'><br></span>");
+    });
+    $("button[name=minus-skill]").on('click', function() {
+        if (skillCount != 0) {
+            $('#next-skill-' + skillCount).remove();
+            skillCount = skillCount - 1;
+        }
+    });
+    
 });
