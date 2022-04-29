@@ -39,6 +39,13 @@ button {
     font-size:15px;
     -webkit-appearance:none;
 }
+#skill-button {
+    width:33px;
+    height:33px;
+    margin:auto;
+    border-radius:0;
+    font-size:20px
+}
 button:hover {
     background:#3C8DFF;
     -webkit-appearance:none;
