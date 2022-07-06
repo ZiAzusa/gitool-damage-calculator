@@ -225,7 +225,7 @@ $(function() {
                     break;
             }
             reactionPart = 1;
-            CRPart = (power['crc'][chrLevel] * reduceResPart * times* (16 * mastery / (mastery + 2000) + 1)).toFixed(3);
+            CRPart = (power['crc'][chrLevel] * reduceResPart * times * (16 * mastery / (mastery + 2000) + 1)).toFixed(3);
         }
         skillPart = (1 + skill) * skillNum;
         if (skillCount != 0) {
